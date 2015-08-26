@@ -6,7 +6,17 @@ abstract class Publisher extends Client
 {
     protected $action = '';
 
-    public function publish(array $command, $callbacks = null)
+    protected function callback($callback, $message)
+    {
+        return call_user_func($callback, $message);
+    }
+
+    protected function evaluate(array $message)
+    {
+        return $message;
+    }
+
+    public function publish(array $command, $callback = null)
     {
         $query = json_encode(array_merge(['action' => $this->action], $command, ['media' => 'all']));
 
@@ -33,7 +43,6 @@ abstract class Publisher extends Client
             return false;
         }
 
-        $callbacks && $this->callback($callbacks, $response);
-        return $response;
+        return $this->callback($callback, $response);
     }
 }

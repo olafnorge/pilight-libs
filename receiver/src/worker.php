@@ -28,18 +28,18 @@ try {
     //$Receiver = new MessageReceiver($Host);
     //$Receiver = new StatsReceiver($Host);
 
-    //$Requester = new ConfigRequester($Host);
+    $Requester = new ConfigPublisher($Host);
     //$Requester = new ControlRequester($Host);
     //$Requester = new RegistryRequester($Host);
-    $Requester = new SendPublisher($Host);
-    //$Requester = new ValuesRequester($Host);
+    //$Requester = new SendPublisher($Host);
+    //$Requester = new ValuesPublisher($Host);
 
     //$Requester = new Heartbeat($Host);
 
     //print_r($Requester->execute(['code' => ['device' => 'switch_kitchen', 'state' => 'on'], 'uuid' => '0000-b8-27-eb-ee9290']));
-    var_dump($Requester->publish(['code' => ['protocol' => ['duwi3'], 'id' => 0, 'unit' => 0, 'on' => 1, 'uuid' => '0000-b8-27-eb-135d8f']]));
+    //var_dump($Requester->publish(['code' => ['protocol' => ['duwi3'], 'id' => 0, 'unit' => 0, 'on' => 1, 'uuid' => '0000-b8-27-eb-135d8f']]));
     //print_r($Requester->execute(['type' => 'get', 'key' => 'pilight.version.current']));
-    //print_r($Requester->execute());
+    print_r($Requester->publish());
     exit;
 
     $Receiver->execute(function ($message) use ($Client) {

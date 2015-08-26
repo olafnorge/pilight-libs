@@ -12,13 +12,13 @@ namespace Pilight\Client;
 class ValuesPublisher extends Publisher
 {
     protected $action = 'request values';
-    protected $options = ['core' => 1, 'config' => 1, 'receiver' => 1];
+    protected $options = ['receiver' => 1];
 
     /**
-     * @param $callbacks
-     * @return bool
+     * @return array
      */
-    public function publish($callbacks = null) {
-        return parent::publish([], $callbacks);
+    public function publish()
+    {
+        return parent::publish([], [$this, 'evaluate']);
     }
 }

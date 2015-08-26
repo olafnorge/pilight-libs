@@ -15,10 +15,9 @@ class ConfigPublisher extends Publisher
     protected $options = ['config' => 1, 'receiver' => 1];
 
     /**
-     * @param $callbacks
-     * @return bool
+     * @return array
      */
-    public function publish($callbacks = null) {
-        return parent::publish([], $callbacks);
+    public function publish() {
+        return parent::publish([], [$this, 'evaluate']);
     }
 }

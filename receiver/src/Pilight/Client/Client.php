@@ -37,7 +37,7 @@ abstract class Client
         return $this->socket;
     }
 
-    final protected function callback($callbacks, $message)
+    protected function callback($callbacks, $message)
     {
         if (is_array($callbacks) && count($callbacks) > 2) {
             foreach ($callbacks as $callback) {
