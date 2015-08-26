@@ -1,6 +1,8 @@
 <?php
-namespace Pilight\Client;
+namespace Pilight\Subscriber;
 
+
+use Pilight\Client\Client;
 
 abstract class Subscriber extends Client
 {

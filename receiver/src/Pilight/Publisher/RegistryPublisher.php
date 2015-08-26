@@ -6,7 +6,7 @@
  * Time: 22:22
  */
 
-namespace Pilight\Client;
+namespace Pilight\Publisher;
 
 
 class RegistryPublisher extends Publisher

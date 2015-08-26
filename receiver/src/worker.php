@@ -2,22 +2,22 @@
 require_once '../vendor/autoload.php';
 
 use Elasticsearch\Client;
-use Pilight\Client\ConfigSubscriber;
-use Pilight\Client\ConfigPublisher;
-use Pilight\Client\ControlPublisher;
-use Pilight\Client\CoreSubscriber;
-use Pilight\Client\ForwardSubscriber;
+use Pilight\Subscriber\ConfigSubscriber;
+use Pilight\Publisher\ConfigPublisher;
+use Pilight\Publisher\ControlPublisher;
+use Pilight\Subscriber\CoreSubscriber;
+use Pilight\Subscriber\ForwardSubscriber;
 use Pilight\Client\Heartbeat;
-use Pilight\Client\RegistryPublisher;
-use Pilight\Client\SendPublisher;
-use Pilight\Client\StatsSubscriber;
-use Pilight\Client\ValuesPublisher;
+use Pilight\Publisher\RegistryPublisher;
+use Pilight\Publisher\SendPublisher;
+use Pilight\Subscriber\StatsSubscriber;
+use Pilight\Publisher\ValuesPublisher;
 use Pilight\Host\Host;
-use Pilight\Client\MessageSubscriber;
+use Pilight\Subscriber\MessageSubscriber;
 
 try {
     $Client = new Client(['hosts' => ['elastic.olafnorge.de']]);
-    $Host = new Host();
+    $Host = new Host('192.168.6.7', 5000);
 
     print_r([$Host->getIp(), $Host->getPort()]);
     //exit;

@@ -6,12 +6,12 @@
  * Time: 22:22
  */
 
-namespace Pilight\Client;
+namespace Pilight\Publisher;
 
 
-class ControlPublisher extends Publisher
+class SendPublisher extends Publisher
 {
-    protected $action = 'control';
+    protected $action = 'send';
     protected $options = ['receiver' => 1];
 
     /**

@@ -1,5 +1,5 @@
 <?php
-namespace Pilight\Client;
+namespace Pilight\Subscriber;
 
 
 final class StatsSubscriber extends Subscriber

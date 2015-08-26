@@ -7,9 +7,12 @@ final class Host
     private $ip = '';
     private $port = 0;
 
-    public function __construct()
+    public function __construct($ip = '', $port = 0)
     {
-        if (!$this->discover()) {
+        if ($ip && $port) {
+            $this->ip = $ip;
+            $this->port = $port;
+        } elseif (!$this->discover()) {
             throw new \Exception('No SSDP host discovered.');
         }
     }

@@ -60,7 +60,7 @@ abstract class Client
             'action' => 'identify',
             'options' => $this->options,
             'media' => 'all',
-            'uuid' => $this->uuid(),
+            //'uuid' => $this->uuid(),
         ]);
 
         if (false === $this->socket) {

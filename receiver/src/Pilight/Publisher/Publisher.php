@@ -1,6 +1,8 @@
 <?php
-namespace Pilight\Client;
+namespace Pilight\Publisher;
 
+
+use Pilight\Client\Client;
 
 abstract class Publisher extends Client
 {
