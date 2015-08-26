@@ -1,0 +1,12 @@
+{
+  "name": "olafnorge/de.olafnorge.smarthome",
+  "require": {
+    "php": ">=5.4",
+    "elasticsearch/elasticsearch": "~1.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "Pilight": "src/"
+    }
+  }
+}
