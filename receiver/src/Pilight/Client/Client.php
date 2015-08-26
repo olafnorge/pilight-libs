@@ -60,6 +60,7 @@ abstract class Client
             'action' => 'identify',
             'options' => $this->options,
             'media' => 'all',
+            'uuid' => $this->uuid(),
         ]);
 
         if (false === $this->socket) {
@@ -75,5 +76,17 @@ abstract class Client
         }
 
         return true;
+    }
+
+
+    private function uuid()
+    {
+        return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+        );
     }
 }
