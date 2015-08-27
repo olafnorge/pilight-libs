@@ -1,5 +1,5 @@
 <?php
-namespace Url2png\Tasks;
+namespace Pilight\Cli\Tasks;
 
 use Phalcon\Cli\Task;
 
