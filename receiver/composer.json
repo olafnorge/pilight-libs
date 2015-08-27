@@ -1,8 +1,22 @@
 {
   "name": "olafnorge/de.olafnorge.smarthome",
+  "license": "MIT",
+  "homepage": "https://smarthome.olafnorge.de/",
+  "authors": [
+    {
+      "name": "Volker Machon",
+      "email": "volker@machon.biz"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "require": {
     "php": ">=5.4",
-    "elasticsearch/elasticsearch": "~1.0"
+    "elasticsearch/elasticsearch": "~1.0",
+    "ext-phalcon": "~2"
+  },
+  "require-dev": {
+    "phalcon/devtools": "dev-master"
   },
   "autoload": {
     "psr-0": {
