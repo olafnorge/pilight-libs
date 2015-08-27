@@ -41,7 +41,7 @@ try {
     //print_r($Requester->execute(['type' => 'get', 'key' => 'pilight.version.current']));
     //print_r($Requester->publish());
 
-    $Receiver->execute(function ($message) use ($Client) {
+    $Receiver->listen(function ($message) use ($Client) {
         print_r($message);
 
         /*$exclude = ['datetime'];

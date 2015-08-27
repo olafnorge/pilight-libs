@@ -1,10 +1,8 @@
 <?php
-namespace Pilight\Subscriber;
+namespace Pilight;
 
 
-use Pilight\Client\Client;
-
-abstract class Subscriber extends Client
+abstract class AbstractSubscriber extends AbstractClient
 {
     protected $filters = [];
 
@@ -13,7 +11,7 @@ abstract class Subscriber extends Client
      * @param $callbacks string|array any valid callback that can be passed to 'call_user_func'
      * @return void
      */
-    public function execute($callbacks)
+    final public function listen($callbacks)
     {
         $buffer = '';
 
@@ -30,6 +28,6 @@ abstract class Subscriber extends Client
 
                 $buffer = '';
             }
-        } while (true);
+        } while (!feof($this->getSocket()));
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Pilight\Host;
+namespace Pilight;
 
 
 final class Host

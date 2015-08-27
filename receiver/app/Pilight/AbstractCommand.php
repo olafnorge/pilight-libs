@@ -1,10 +1,7 @@
 <?php
-namespace Pilight\Publisher;
+namespace Pilight;
 
-
-use Pilight\Client\AbstractClient;
-
-abstract class Publisher extends AbstractClient
+abstract class AbstractCommand extends AbstractClient
 {
     protected $action = '';
 

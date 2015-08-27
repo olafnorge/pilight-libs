@@ -6,10 +6,12 @@
  * Time: 22:22
  */
 
-namespace Pilight\Publisher;
+namespace Pilight\Command;
 
 
-class Control extends Publisher
+use Pilight\AbstractCommand;
+
+class Control extends AbstractCommand
 {
     protected $action = 'control';
     protected $options = ['receiver' => 1];
@@ -19,7 +21,7 @@ class Control extends Publisher
      * @param $callbacks
      * @return bool
      */
-    public function publish(array $command, $callbacks = null) {
-        return parent::publish($command, $callbacks) === ['status' => 'success'];
+    public function write(array $command, $callbacks = null) {
+        return parent::write($command, $callbacks) === ['status' => 'success'];
     }
 }

@@ -1,10 +1,8 @@
 <?php
-namespace Pilight\Client;
+namespace Pilight;
 
 
-use Pilight\Host\Host;
-
-abstract class Client
+abstract class AbstractClient
 {
     private $Host = null;
     private $socket = null;

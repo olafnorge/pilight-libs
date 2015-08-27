@@ -1,16 +1,15 @@
 <?php
-namespace Pilight\Publisher;
+namespace Pilight;
 
 
-use Pilight\Client\AbstractClient;
-
-abstract class Publisher extends AbstractClient
+abstract class AbstractReader extends AbstractClient
 {
     protected $action = '';
+    protected $command = [];
 
     protected function callback($callback, $message)
     {
-        return call_user_func($callback, $message);
+        return call_user_func($callback ? $callback : [$this, 'evaluate'], $message);
     }
 
     protected function evaluate(array $message)
@@ -18,9 +17,9 @@ abstract class Publisher extends AbstractClient
         return $message;
     }
 
-    public function write(array $command, $callback = null)
+    public function read($callback = null)
     {
-        $query = json_encode(array_merge(['action' => $this->action], $command, ['media' => 'all']));
+        $query = json_encode(array_merge(['action' => $this->action], $this->command, ['media' => 'all']));
 
         if (false === fwrite($this->getSocket(), $query, 1024)) {
             return false;

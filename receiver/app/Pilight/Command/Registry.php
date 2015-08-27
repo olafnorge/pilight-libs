@@ -6,10 +6,12 @@
  * Time: 22:22
  */
 
-namespace Pilight\Publisher;
+namespace Pilight\Command;
 
 
-class Registry extends Publisher
+use Pilight\AbstractCommand;
+
+class Registry extends AbstractCommand
 {
     protected $action = 'registry';
     protected $options = ['core' => 1, 'config' => 1, 'receiver' => 1];
@@ -19,7 +21,7 @@ class Registry extends Publisher
      * @param $callbacks
      * @return bool
      */
-    public function publish(array $command, $callbacks = null) {
-        return parent::publish($command, $callbacks);
+    public function write(array $command, $callbacks = null) {
+        return parent::write($command, $callbacks);
     }
 }

@@ -1,8 +1,8 @@
 <?php
-namespace Pilight\Client;
+namespace Pilight;
 
 
-final class Watchdog extends Client
+final class Watchdog extends AbstractClient
 {
     protected $options = ['core' => 1];
 

@@ -2,7 +2,9 @@
 namespace Pilight\Subscriber;
 
 
-final class Config extends Subscriber
+use Pilight\AbstractSubscriber;
+
+final class Config extends AbstractSubscriber
 {
     protected $filters = ['config'];
     protected $options = ['config' => 1];

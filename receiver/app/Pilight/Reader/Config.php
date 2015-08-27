@@ -6,18 +6,13 @@
  * Time: 22:22
  */
 
-namespace Pilight\Publisher;
+namespace Pilight\Reader;
 
 
-class Config extends Publisher
+use Pilight\AbstractReader;
+
+class Config extends AbstractReader
 {
     protected $action = 'request config';
     protected $options = ['config' => 1, 'receiver' => 1];
-
-    /**
-     * @return array
-     */
-    public function publish() {
-        return parent::publish([], [$this, 'evaluate']);
-    }
 }
