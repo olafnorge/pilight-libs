@@ -1,16 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: volker
- * Date: 24.08.15
- * Time: 22:22
- */
-
 namespace Pilight\Reader;
 
 
 use Pilight\AbstractReader;
 
+/**
+ * Class Registry
+ * @package Pilight\Reader
+ */
 class Registry extends AbstractReader
 {
     protected $action = 'registry';

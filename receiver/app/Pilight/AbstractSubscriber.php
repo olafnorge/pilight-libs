@@ -1,7 +1,10 @@
 <?php
 namespace Pilight;
 
-
+/**
+ * Class AbstractSubscriber
+ * @package Pilight
+ */
 abstract class AbstractSubscriber extends AbstractClient
 {
     protected $filters = [];
@@ -9,7 +12,7 @@ abstract class AbstractSubscriber extends AbstractClient
     /**
      * Attaches to socket and reads messages from it
      * @param $callbacks string|array any valid callback that can be passed to 'call_user_func'
-     * @return void
+     * @throws \Exception
      */
     final public function listen($callbacks)
     {
@@ -29,5 +32,7 @@ abstract class AbstractSubscriber extends AbstractClient
                 $buffer = '';
             }
         } while (!feof($this->getSocket()));
+
+        throw new \Exception('Connection to lost.');
     }
 }

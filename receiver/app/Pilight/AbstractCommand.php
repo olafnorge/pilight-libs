@@ -1,21 +1,39 @@
 <?php
 namespace Pilight;
 
+/**
+ * Class AbstractCommand
+ * @package Pilight
+ */
 abstract class AbstractCommand extends AbstractClient
 {
     protected $action = '';
 
+    /**
+     * @param $callback
+     * @param $message
+     * @return mixed
+     */
     protected function callback($callback, $message)
     {
         return call_user_func($callback ? $callback : [$this, 'evaluate'], $message);
     }
 
+    /**
+     * @param array $message
+     * @return array
+     */
     protected function evaluate(array $message)
     {
         return $message;
     }
 
-    public function write(array $command, $callback = null)
+    /**
+     * @param array $command
+     * @param null $callback
+     * @return bool|mixed
+     */
+    public function execute(array $command, $callback = null)
     {
         $query = json_encode(array_merge(['action' => $this->action], $command, ['media' => 'all']));
 

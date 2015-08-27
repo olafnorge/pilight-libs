@@ -1,12 +1,20 @@
 <?php
 namespace Pilight;
 
-
+/**
+ * Class Host
+ * @package Pilight
+ */
 final class Host
 {
     private $ip = '';
     private $port = 0;
 
+    /**
+     * @param string $ip
+     * @param int $port
+     * @throws \Exception
+     */
     public function __construct($ip = '', $port = 0)
     {
         if ($ip && $port) {
@@ -16,7 +24,6 @@ final class Host
             throw new \Exception('No SSDP host discovered.');
         }
     }
-
 
     /**
      * Discovers SSDP host
@@ -74,13 +81,17 @@ final class Host
         return !empty($this->ip) && !empty($this->port);
     }
 
-
+    /**
+     * @return string
+     */
     public function getIp()
     {
         return $this->ip;
     }
 
-
+    /**
+     * @return int
+     */
     public function getPort()
     {
         return $this->port;

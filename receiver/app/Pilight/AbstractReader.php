@@ -1,22 +1,38 @@
 <?php
 namespace Pilight;
 
-
+/**
+ * Class AbstractReader
+ * @package Pilight
+ */
 abstract class AbstractReader extends AbstractClient
 {
     protected $action = '';
     protected $command = [];
 
+    /**
+     * @param $callback
+     * @param $message
+     * @return mixed
+     */
     protected function callback($callback, $message)
     {
         return call_user_func($callback ? $callback : [$this, 'evaluate'], $message);
     }
 
+    /**
+     * @param array $message
+     * @return array
+     */
     protected function evaluate(array $message)
     {
         return $message;
     }
 
+    /**
+     * @param null $callback
+     * @return bool|mixed
+     */
     public function read($callback = null)
     {
         $query = json_encode(array_merge(['action' => $this->action], $this->command, ['media' => 'all']));

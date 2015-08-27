@@ -1,7 +1,10 @@
 <?php
 namespace Pilight;
 
-
+/**
+ * Class AbstractClient
+ * @package Pilight
+ */
 abstract class AbstractClient
 {
     private $Host = null;
@@ -9,7 +12,7 @@ abstract class AbstractClient
     protected $options = ['core' => 1, 'config' => 1, 'forward' => 1, 'receiver' => 1, 'stats' => 1];
 
     /**
-     * Registers as listener to $Host
+     * Registers as client to $Host
      *
      * @param Host $Host
      * @throws \Exception if SSDP host can't be discovered or client can't be registered
@@ -23,6 +26,9 @@ abstract class AbstractClient
         }
     }
 
+    /**
+     *
+     */
     public function __destruct()
     {
         if ($this->socket) {
@@ -30,11 +36,18 @@ abstract class AbstractClient
         }
     }
 
+    /**
+     * @return null
+     */
     protected function getSocket()
     {
         return $this->socket;
     }
 
+    /**
+     * @param $callbacks
+     * @param $message
+     */
     protected function callback($callbacks, $message)
     {
         if (is_array($callbacks) && count($callbacks) > 2) {
@@ -77,6 +90,9 @@ abstract class AbstractClient
     }
 
 
+    /**
+     * @return string
+     */
     private function uuid()
     {
         $bytes = openssl_random_pseudo_bytes(16);
