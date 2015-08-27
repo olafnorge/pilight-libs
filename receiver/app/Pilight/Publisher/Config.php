@@ -9,7 +9,7 @@
 namespace Pilight\Publisher;
 
 
-class ConfigPublisher extends Publisher
+class Config extends Publisher
 {
     protected $action = 'request config';
     protected $options = ['config' => 1, 'receiver' => 1];

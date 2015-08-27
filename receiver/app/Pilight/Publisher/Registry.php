@@ -9,10 +9,10 @@
 namespace Pilight\Publisher;
 
 
-class SendPublisher extends Publisher
+class Registry extends Publisher
 {
-    protected $action = 'send';
-    protected $options = ['receiver' => 1];
+    protected $action = 'registry';
+    protected $options = ['core' => 1, 'config' => 1, 'receiver' => 1];
 
     /**
      * @param array $command
@@ -20,6 +20,6 @@ class SendPublisher extends Publisher
      * @return bool
      */
     public function publish(array $command, $callbacks = null) {
-        return parent::publish($command, $callbacks) === ['status' => 'success'];
+        return parent::publish($command, $callbacks);
     }
 }

@@ -2,18 +2,18 @@
 require_once '../vendor/autoload.php';
 
 use Elasticsearch\Client;
-use Pilight\Subscriber\ConfigSubscriber;
-use Pilight\Publisher\ConfigPublisher;
-use Pilight\Publisher\ControlPublisher;
-use Pilight\Subscriber\CoreSubscriber;
-use Pilight\Subscriber\ForwardSubscriber;
-use Pilight\Client\Heartbeat;
-use Pilight\Publisher\RegistryPublisher;
-use Pilight\Publisher\SendPublisher;
-use Pilight\Subscriber\StatsSubscriber;
-use Pilight\Publisher\ValuesPublisher;
+use Pilight\Subscriber\Config;
+use Pilight\Publisher\Config;
+use Pilight\Publisher\Control;
+use Pilight\Subscriber\Core;
+use Pilight\Subscriber\Forward;
+use Pilight\Client\Watchdog;
+use Pilight\Publisher\Registry;
+use Pilight\Publisher\Send;
+use Pilight\Subscriber\Stats;
+use Pilight\Publisher\Values;
 use Pilight\Host\Host;
-use Pilight\Subscriber\MessageSubscriber;
+use Pilight\Subscriber\Message;
 
 try {
     $Client = new Client(['hosts' => ['elastic.olafnorge.de']]);
@@ -25,7 +25,7 @@ try {
     //$Receiver = new ConfigReceiver($Host);
     //$Receiver = new CoreReceiver($Host);
     //$Receiver = new ForwardReceiver($Host);
-    $Receiver = new MessageSubscriber($Host);
+    $Receiver = new Message($Host);
     //$Receiver = new StatsReceiver($Host);
 
     //$Requester = new ConfigPublisher($Host);

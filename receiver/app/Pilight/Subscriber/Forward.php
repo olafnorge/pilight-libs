@@ -2,7 +2,7 @@
 namespace Pilight\Subscriber;
 
 
-final class ForwardSubscriber extends Subscriber
+final class Forward extends Subscriber
 {
     protected $options = ['forward' => 1];
 }

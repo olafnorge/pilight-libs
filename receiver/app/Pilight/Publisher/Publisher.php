@@ -22,14 +22,13 @@ abstract class Publisher extends Client
     {
         $query = json_encode(array_merge(['action' => $this->action], $command, ['media' => 'all']));
 
-        print_r($query);
-
         if (false === fwrite($this->getSocket(), $query, 1024)) {
             return false;
         }
 
         $buffer = '';
         $response = ['status' => 'failed'];
+        $callCount = 0;
 
         do {
             $buffer .= fgets($this->getSocket(), 1024);
@@ -39,7 +38,7 @@ abstract class Publisher extends Client
                 $response = json_decode(trim(substr($buffer, 0, -2)), true);
                 break;
             }
-        } while (true);
+        } while ($callCount++ < 100);
 
         if ($response === ['status' => 'failed']) {
             return false;

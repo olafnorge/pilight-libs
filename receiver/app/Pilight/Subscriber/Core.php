@@ -2,7 +2,7 @@
 namespace Pilight\Subscriber;
 
 
-final class CoreSubscriber extends Subscriber
+final class Core extends Subscriber
 {
     protected $filters = ['core'];
     protected $options = ['core' => 1];

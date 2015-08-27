@@ -9,9 +9,9 @@
 namespace Pilight\Publisher;
 
 
-class ControlPublisher extends Publisher
+class Send extends Publisher
 {
-    protected $action = 'control';
+    protected $action = 'send';
     protected $options = ['receiver' => 1];
 
     /**

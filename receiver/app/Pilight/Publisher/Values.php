@@ -9,7 +9,7 @@
 namespace Pilight\Publisher;
 
 
-class ValuesPublisher extends Publisher
+class Values extends Publisher
 {
     protected $action = 'request values';
     protected $options = ['receiver' => 1];

@@ -2,8 +2,9 @@
 namespace Pilight\Client;
 
 
-final class Heartbeat extends Client
+final class Watchdog extends Client
 {
+    protected $options = ['core' => 1];
 
     public function ping()
     {
