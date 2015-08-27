@@ -20,7 +20,7 @@
   },
   "autoload": {
     "psr-0": {
-      "Pilight": "app/"
+      "Pilight": "app/libs/"
     }
   }
 }
