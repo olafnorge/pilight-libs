@@ -12,13 +12,11 @@ abstract class AbstractClient
      * Registers as listener to $Host
      *
      * @param Host $Host
-     * @throws \Exception if SSDP host can't be discovered or listener can't be registered
+     * @throws \Exception if SSDP host can't be discovered or client can't be registered
      */
     public function __construct(Host $Host)
     {
         $this->Host = $Host;
-
-        print_r([$this->uuid()]);
 
         if (!$this->register()) {
             throw new \Exception('Unable to register at host.');
@@ -82,8 +80,8 @@ abstract class AbstractClient
     private function uuid()
     {
         $bytes = openssl_random_pseudo_bytes(16);
-        $bytes[6] = chr(ord($bytes[6]) & 0x0f | 0x40); // set version to 0100
-        $bytes[8] = chr(ord($bytes[8]) & 0x3f | 0x80); // set bits 6-7 to 10
+        $bytes[6] = chr(ord($bytes[6]) & 0x0f | 0x40);
+        $bytes[8] = chr(ord($bytes[8]) & 0x3f | 0x80);
 
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($bytes), 2));
     }

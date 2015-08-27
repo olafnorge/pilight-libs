@@ -7,7 +7,7 @@ abstract class AbstractCommand extends AbstractClient
 
     protected function callback($callback, $message)
     {
-        return call_user_func($callback, $message);
+        return call_user_func($callback ? $callback : [$this, 'evaluate'], $message);
     }
 
     protected function evaluate(array $message)
