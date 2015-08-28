@@ -59,6 +59,27 @@ abstract class AbstractClient
         }
     }
 
+    final protected function isAlive()
+    {
+        if (feof($this->socket)) {
+            fclose($this->socket);
+
+            for ($i = 0; $i < 30; $i++) {
+                try {
+                    $registered = $this->register();
+                    if ($registered) return true;
+                    sleep(2);
+                } catch (\Exception $Exception) {
+                    sleep(2);
+                }
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * Registers at SSDP host
      * @return bool true if registration at SSDP host was successful otherwise false

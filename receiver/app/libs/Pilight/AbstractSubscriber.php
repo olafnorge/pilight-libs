@@ -31,8 +31,8 @@ abstract class AbstractSubscriber extends AbstractClient
 
                 $buffer = '';
             }
-        } while (!feof($this->getSocket()));
+        } while ($this->isAlive());
 
-        throw new \Exception('Connection to lost.');
+        throw new \Exception('Connection to host lost.');
     }
 }
