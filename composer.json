@@ -1,0 +1,21 @@
+{
+  "name": "pilight/pilight-libs",
+  "license": "MIT",
+  "homepage": "https://smarthome.olafnorge.de/",
+  "authors": [
+    {
+      "name": "Volker Machon",
+      "email": "volker@machon.biz"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=5.4"
+  },
+  "autoload": {
+    "psr-0": {
+      "Pilight": "src/"
+    }
+  }
+}
