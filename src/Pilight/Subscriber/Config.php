@@ -34,6 +34,6 @@ use Pilight\AbstractSubscriber;
  */
 final class Config extends AbstractSubscriber
 {
-    protected $filters = ['config'];
+    protected $filters = ['config', 'update'];
     protected $options = ['config' => 1];
 }

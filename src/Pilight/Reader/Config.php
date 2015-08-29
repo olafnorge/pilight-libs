@@ -36,4 +36,13 @@ class Config extends AbstractReader
 {
     protected $action = 'request config';
     protected $options = ['config' => 1, 'receiver' => 1];
+
+    /**
+     * @param array $message
+     * @return array
+     */
+    protected function evaluate(array $message)
+    {
+        return parent::evaluate(isset($message['config']) ? $message['config'] : $message);
+    }
 }

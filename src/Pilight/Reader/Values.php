@@ -36,4 +36,13 @@ class Values extends AbstractReader
 {
     protected $action = 'request values';
     protected $options = ['receiver' => 1];
+
+    /**
+     * @param array $message
+     * @return array
+     */
+    protected function evaluate(array $message)
+    {
+        return parent::evaluate(isset($message['values']) ? $message['values'] : $message);
+    }
 }
