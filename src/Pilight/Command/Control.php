@@ -43,6 +43,6 @@ class Control extends AbstractCommand
      */
     public function control(array $command)
     {
-        return $this->execute($command, [$this, 'evaluate']) === ['status' => 'success'];
+        return $this->execute(['code' => $command], [$this, 'evaluate']) === ['status' => 'success'];
     }
 }
