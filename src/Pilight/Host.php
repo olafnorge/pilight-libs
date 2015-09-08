@@ -25,6 +25,10 @@
 
 namespace Pilight;
 
+use Pilight\Socket\Endpoint;
+use Pilight\Socket\Message;
+use Pilight\Socket\Socket;
+
 /**
  * Class Host
  * @package Pilight
@@ -56,43 +60,33 @@ final class Host
      */
     private function discover()
     {
+        $endpoint = new Endpoint('239.255.255.25', 1900);
+
         $headers = implode("\r\n", [
                 'M-SEARCH * HTTP/1.1',
-                'Host: 239.255.255.250:1900',
+                'Host: ' . $endpoint,
                 'ST: urn:schemas-upnp-org:service:pilight:1',
                 'Man: ssdp:discover',
                 'MX: 3',
             ]) . "\r\n\r\n";
 
-        $socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
-
-        if (false === $socket) {
-            throw new \Exception(socket_strerror(socket_last_error()), socket_last_error());
-        }
-
-        if (false === socket_set_option($socket, SOL_SOCKET, SO_RCVTIMEO, array('sec' => 0, 'usec' => 10000))) {
-            throw new \Exception(socket_strerror(socket_last_error($socket)), socket_last_error());
-        }
-
-        if (false === socket_sendto($socket, $headers, 1024, 0, '239.255.255.250', 1900)) {
-            throw new \Exception(socket_strerror(socket_last_error($socket)), socket_last_error());
-        }
+        $socket = Socket::create(AF_INET, SOCK_DGRAM, SOL_UDP);
+        $socket->setTimeout(10000);
+        $socket->sendTo(new Message($headers), $endpoint);
 
         $buffer = '';
-        $socketName = '';
-        $socketPort = '';
 
-        while (socket_recvfrom($socket, $buffer, 1024, MSG_WAITALL, $socketName, $socketPort)) {
+        while ($socket->receive($buffer)) {
             if (false !== strpos($buffer, 'pilight')) {
-                $hostOctect1 = 0;
-                $hostOctect2 = 0;
-                $hostOctect3 = 0;
-                $hostOctect4 = 0;
+                $hostOctet1 = 0;
+                $hostOctet2 = 0;
+                $hostOctet3 = 0;
+                $hostOctet4 = 0;
                 $hostPort = 0;
 
                 foreach (explode("\r\n", $buffer) as $bufferLine) {
-                    if (5 === sscanf($bufferLine, "Location:%d.%d.%d.%d:%d\r\n", $hostOctect1, $hostOctect2, $hostOctect3, $hostOctect4, $hostPort)) {
-                        $this->ip = $hostOctect1 . '.' . $hostOctect2 . '.' . $hostOctect3 . '.' . $hostOctect4;
+                    if (5 === sscanf($bufferLine, "Location:%d.%d.%d.%d:%d\r\n", $hostOctet1, $hostOctet2, $hostOctet3, $hostOctet4, $hostPort)) {
+                        $this->ip = $hostOctet1 . '.' . $hostOctet2 . '.' . $hostOctet3 . '.' . $hostOctet4;
                         $this->port = $hostPort;
                         break 2;
                     }
@@ -100,7 +94,7 @@ final class Host
             }
         }
 
-        socket_close($socket);
+        $socket->close();
 
         return !empty($this->ip) && !empty($this->port);
     }
