@@ -25,7 +25,7 @@
 
 namespace Pilight\Socket\Exception;
 
-class ReceiveException extends \RuntimeException
+class ReceiveException extends SocketException
 {
 
 }

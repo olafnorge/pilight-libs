@@ -25,7 +25,7 @@
 
 namespace Pilight\Socket\Exception;
 
-class SocketNotCreatedException extends \RuntimeException
+class SocketNotCreatedException extends SocketException
 {
 
 }

@@ -23,9 +23,9 @@
  * SOFTWARE.
  */
 
-namespace Pilight\Socket\Exception;
+namespace Pilight;
 
-class OptionNotSetException extends SocketException
+class HostDiscoveryException extends \RuntimeException
 {
 
 }

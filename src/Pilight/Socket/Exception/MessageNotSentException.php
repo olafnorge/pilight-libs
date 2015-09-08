@@ -25,7 +25,7 @@
 
 namespace Pilight\Socket\Exception;
 
-class MessageNotSentException extends \RuntimeException
+class MessageNotSentException extends SocketException
 {
 
 }
