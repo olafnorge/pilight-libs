@@ -25,6 +25,11 @@
 
 namespace Pilight;
 
+use Pilight\Socket\Endpoint;
+use Pilight\Socket\Exception\SocketException;
+use Pilight\Socket\Message;
+use Pilight\Socket\Socket;
+
 /**
  * Class Host
  * @package Pilight
@@ -51,58 +56,63 @@ final class Host
 
     /**
      * Discovers SSDP host
-     * @return bool true if SSDP host discovery was successful otherwise false
-     * @throws \Exception if any socket interaction fails
+     *
+     * @param string $discoveryHost
+     * @param int    $discoveryPort
+     *
+     * @return Host with discoverd SSDP host settings
+     *
+     * @throws HostDiscoveryException if discovery didn't work properly
+     * @throws SocketException if any socket interaction fails
+     *
+     * @todo Remove default value for $discoveryHost argument - make sure to call it properly from the outside
+     * @todo Remove default value for $discoveryPort argument - make sure to call it properly from the outside
      */
-    private function discover()
+    public static function discover($discoveryHost = '239.255.255.25', $discoveryPort = 1900)
     {
+        $endpoint = new Endpoint($discoveryHost, $discoveryPort);
+
         $headers = implode("\r\n", [
-                'M-SEARCH * HTTP/1.1',
-                'Host: 239.255.255.250:1900',
-                'ST: urn:schemas-upnp-org:service:pilight:1',
-                'Man: ssdp:discover',
-                'MX: 3',
-            ]) . "\r\n\r\n";
+            'M-SEARCH * HTTP/1.1',
+            'Host: ' . $endpoint,
+            'ST: urn:schemas-upnp-org:service:pilight:1',
+            'Man: ssdp:discover',
+            'MX: 3',
+        ]) . "\r\n\r\n";
 
-        $socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
-
-        if (false === $socket) {
-            throw new \Exception(socket_strerror(socket_last_error()), socket_last_error());
-        }
-
-        if (false === socket_set_option($socket, SOL_SOCKET, SO_RCVTIMEO, array('sec' => 0, 'usec' => 10000))) {
-            throw new \Exception(socket_strerror(socket_last_error($socket)), socket_last_error());
-        }
-
-        if (false === socket_sendto($socket, $headers, 1024, 0, '239.255.255.250', 1900)) {
-            throw new \Exception(socket_strerror(socket_last_error($socket)), socket_last_error());
-        }
+        $socket = Socket::create(AF_INET, SOCK_DGRAM, SOL_UDP);
+        $socket->setTimeout(10000);
+        $socket->sendTo(new Message($headers), $endpoint);
 
         $buffer = '';
-        $socketName = '';
-        $socketPort = '';
+        $ip = '';
+        $port = '';
 
-        while (socket_recvfrom($socket, $buffer, 1024, MSG_WAITALL, $socketName, $socketPort)) {
+        while ($socket->receive($buffer)) {
             if (false !== strpos($buffer, 'pilight')) {
-                $hostOctect1 = 0;
-                $hostOctect2 = 0;
-                $hostOctect3 = 0;
-                $hostOctect4 = 0;
+                $hostOctet1 = 0;
+                $hostOctet2 = 0;
+                $hostOctet3 = 0;
+                $hostOctet4 = 0;
                 $hostPort = 0;
 
                 foreach (explode("\r\n", $buffer) as $bufferLine) {
-                    if (5 === sscanf($bufferLine, "Location:%d.%d.%d.%d:%d\r\n", $hostOctect1, $hostOctect2, $hostOctect3, $hostOctect4, $hostPort)) {
-                        $this->ip = $hostOctect1 . '.' . $hostOctect2 . '.' . $hostOctect3 . '.' . $hostOctect4;
-                        $this->port = $hostPort;
+                    if (5 === sscanf($bufferLine, "Location:%d.%d.%d.%d:%d\r\n", $hostOctet1, $hostOctet2, $hostOctet3, $hostOctet4, $hostPort)) {
+                        $ip = $hostOctet1 . '.' . $hostOctet2 . '.' . $hostOctet3 . '.' . $hostOctet4;
+                        $port = $hostPort;
                         break 2;
                     }
                 }
             }
         }
 
-        socket_close($socket);
+        $socket->close();
 
-        return !empty($this->ip) && !empty($this->port);
+        if ($ip && $port) {
+            return new static($ip, $port);
+        }
+
+        throw new HostDiscoveryException('Host could not be discovered.');
     }
 
     /**
